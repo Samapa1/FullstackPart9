@@ -11,15 +11,15 @@ interface exerciseValues {
   average: number;
 }
 
-const calculateExercises = (a: number[], b: number): exerciseValues => {
+export const calculateExercises = (a: number[], b: number): exerciseValues => {
 
     let trainingdays = 0;
     a.forEach(day => {if (day > 0) 
-    {trainingdays ++}
-    })
+    {trainingdays ++;}
+    });
 
     let traininghours = 0;
-    a.forEach(day => traininghours += day )
+    a.forEach(day => traininghours += day );
 
     const average = traininghours / a.length;
     const isSuccess = average >= b;
@@ -32,7 +32,7 @@ const calculateExercises = (a: number[], b: number): exerciseValues => {
             return 2;
         else 
             return 1;
-    } 
+    }; 
 
     const ratingNumber = checkRating(b, average);
 
@@ -45,7 +45,7 @@ const calculateExercises = (a: number[], b: number): exerciseValues => {
         }
         else 
         return 'there is room for improvement';
-    }
+    };
 
 
     return {
@@ -56,25 +56,27 @@ const calculateExercises = (a: number[], b: number): exerciseValues => {
         ratingDescription: getDescription(ratingNumber),
         target: b,
         average: average
-    }
-}
+    };
+};
 
 try {
-    const numberArray = []
-    if (isEmpty()) {
-        throw new Error('there must be at least 2 input values (target and daily training hours)');
+    if (require.main === module) {
+        const numberArray = [];
+        if (isEmpty()) {
+            throw new Error('there must be at least 2 input values (target and daily training hours)');
+        }
+        let i = process.argv.length -1;
+        while  (i > 2) {
+            if (isNotNumber(process.argv[i])) {
+                throw new Error('input must be numbers');
+            } 
+            numberArray.push(Number(process.argv[i]));
+            i --;
+        }
+        console.log(calculateExercises(numberArray,Number(process.argv[2])));
     }
-    let i = process.argv.length -1;
-    while  (i >2) {
-        if (isNotNumber(process.argv[i])) {
-            throw new Error('input must be numbers');
-        } 
-        numberArray.push(Number(process.argv[i]))
-        i --
-    }
-    console.log(calculateExercises(numberArray,Number(process.argv[2])));
   } catch (error: unknown) {
-    let errorMessage = 'Something went wrong: '
+    let errorMessage = 'Something went wrong: ';
     if (error instanceof Error) {
       errorMessage += error.message;
     }

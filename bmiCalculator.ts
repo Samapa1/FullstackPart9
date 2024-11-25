@@ -18,14 +18,14 @@ export const calculateBmi = (a: number, b: number): string => {
     } 
     else 
         return 'Obese';
-}
+};
 
 try {
     if (require.main === module) {
         console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])));
     }
   } catch (error: unknown) {
-    let errorMessage = 'Something went wrong: '
+    let errorMessage = 'Something went wrong: ';
     if (error instanceof Error) {
       errorMessage += error.message;
     }
