@@ -4,8 +4,8 @@ Content-Type: application/json
 {
   "name": "Matti Paavilainen",
   "dateOfBirth": "1960-03-03",
-  "ssn": "110388-403",
-  "gender": "other",
+  "ssn": "",
+  "gender": "male",
   "occupation": "cop"
 }
 
