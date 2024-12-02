@@ -8,9 +8,11 @@ const Diary = ( {entryData} : {entryData: DiaryEntry}) => {
             visibility: {entryData.visibility}
             <br></br>
             weather: {entryData.weather}
+            <br></br>
+            comment: {entryData.comment}
         </p>
-    )
-}
+    );
+};
 
 export default Diary;
 
