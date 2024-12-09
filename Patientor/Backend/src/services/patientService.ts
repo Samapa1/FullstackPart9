@@ -9,6 +9,19 @@ const getPatients = (): Patient[] => {
   return patientData;
 };
 
+// const getPatientData = (id: string): Patient => {
+//     const onePatient = patientData.find(patient => patient.id === id);
+//     if (!onePatient)
+//         throw new Error('The patient was not found!');
+
+//     return onePatient;
+// };
+
+const getPatientData = (id: string): Patient | undefined => {
+    const onePatient = patientData.find(patient => patient.id === id);
+    return onePatient;
+};
+
 const getNonSensitivePatientData = (): NonSensitivePatientData[] => {
     return patientData.map( ({id, name, dateOfBirth, gender, occupation }) => ({
         id,
@@ -23,7 +36,8 @@ const addPatient = ( patient: NewPatientEntry): Patient => {
     const id = uuid();
     const newPatient = {
         id: id,
-        ...patient
+        ...patient,
+        entries: []
     };
     patientData.push(newPatient);
     return newPatient;
@@ -32,5 +46,6 @@ const addPatient = ( patient: NewPatientEntry): Patient => {
 export default {
     getPatients,
     getNonSensitivePatientData,
-    addPatient
+    addPatient,
+    getPatientData
 };
