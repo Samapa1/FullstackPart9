@@ -1,5 +1,6 @@
 import { v1 as uuid } from 'uuid';
-import patientData from '../../data/patients.ts';
+// import patientData from '../../data/patients.ts';
+import patientData from '../../data/patients-full.ts';
 import { Patient } from '../types';
 import { NonSensitivePatientData } from '../types';
 import { NewPatientEntry } from '../types';
