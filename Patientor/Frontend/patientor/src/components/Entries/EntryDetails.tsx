@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Entry } from '../../types';
 import diagnosesService from "../../services/diagnoses";
 import { Diagnosis } from '../../types';
-import Hospitalentry from './HospitalEntry';
+import HospitalEntry from './HospitalEntry';
 import HealtcheckEntry from './HealtcheckEntry';
 import OccupationalEntry from './OccupationalEntry';
 
@@ -32,7 +32,7 @@ const EntryDetails = ( {entrydata} : Props) => {
             case "HealthCheck":
                 return <HealtcheckEntry entrydata={entrydata} diagnoses={diagnoses}/>;
             case "Hospital":
-                return <Hospitalentry entrydata={entrydata} diagnoses={diagnoses}/>;
+                return <HospitalEntry entrydata={entrydata} diagnoses={diagnoses}/>;
             case "OccupationalHealthcare":
                 return <OccupationalEntry entrydata={entrydata} diagnoses={diagnoses}/>;
             default:

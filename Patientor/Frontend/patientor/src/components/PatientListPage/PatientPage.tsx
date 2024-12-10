@@ -8,7 +8,7 @@ import patientService from "../../services/patients";
 // import diagnosesService from "../../services/diagnoses";
 import { Patient } from '../../types';
 // import { Diagnosis } from '../../types';
-import EntryDetails from './EntryDetails';
+import EntryDetails from '../Entries/EntryDetails';
 
 const PatientPage = () => {
     const [patient, setPatient] = useState<Patient>();
