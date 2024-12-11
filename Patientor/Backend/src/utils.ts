@@ -1,7 +1,48 @@
 import { z } from 'zod';
 import { Gender } from './types';
-// import { NewPatientEntry } from './types';
+import { Discharge, SickLeave } from './types';
+import { EntryWithoutId } from './types';
+import { Diagnosis } from './types';
+import {HealthCheckRating} from './types';
 
+const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
+    if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+      // we will just trust the data to be in correct form
+      return [] as Array<Diagnosis['code']>;
+    }
+  
+    return object.diagnosisCodes as Array<Diagnosis['code']>;
+  };
+
+const parseDischarge = (object: unknown): Discharge => {
+    if ( !object || typeof object !== 'object' ) {
+        throw new Error('Incorrect or missing discharge field');
+      }
+
+    if ('date' in object && 'criteria' in object) {
+        const discharge = {
+            date: z.string().parse(object.date),
+            criteria: z.string().parse(object.criteria),
+        };
+        return discharge;
+    }
+    throw new Error('Incorrect discharge field');
+};
+
+const parseSickLeave = (object: unknown): SickLeave => {
+    if ( !object || typeof object !== 'object' ) {
+        throw new Error('Incorrect sickleave field');
+      }
+
+    if ('startDate' in object && 'endDate' in object) {
+        const sickLeave = {
+            startDate: z.string().parse(object.startDate),
+            endDate: z.string().parse(object.endDate),
+        };
+        return sickLeave;
+    }
+    throw new Error('Incorrect sickleave field');
+};
 
 const isSsn = (ssn: string): boolean => {
     if (ssn.includes('-') || ssn.includes('A') ) {
@@ -15,7 +56,7 @@ const isSsn = (ssn: string): boolean => {
     return false;
 };
 
-export const newEntrySchema = z.object({
+export const newPatientSchema = z.object({
     name: z.string(),
     dateOfBirth: z.string().date(),
     ssn: z.string().refine(isSsn, {
@@ -25,7 +66,77 @@ export const newEntrySchema = z.object({
     occupation: z.string(),
 });
 
+export const toNewEntry = (object: unknown): EntryWithoutId => {
+    if ( !object || typeof object !== 'object' ) {
+        throw new Error('Incorrect or missing data');
+    }
+ 
+    if ('date' in object && 'specialist' in object && 'type' in object && 'description' in object && 'diagnosisCodes' in object)  {
+        
+        const newBaseEntry = {
+            date: z.string().parse(object.date),
+            specialist: z.string().parse(object.specialist),
+            diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
+            description: z.string().parse(object.description),
+        };
 
-// export const toNewPatientEntry = (object: unknown): NewPatientEntry => {
-//     return newEntrySchema.parse(object);
-//   };
+        switch(object.type) {
+            case "HealthCheck":
+                { 
+                    if ("healthCheckRating" in object) {
+                        const newEntry: EntryWithoutId = {
+                            type: "HealthCheck",
+                            healthCheckRating: z.nativeEnum(HealthCheckRating).parse(object.healthCheckRating),
+                            ...newBaseEntry
+                        };
+                        return newEntry;
+                    }
+                break;
+                }
+            case "Hospital": 
+                {
+                    if ("discharge" in object ) {
+                        const newEntry: EntryWithoutId = {
+                            type: "Hospital",
+                            discharge: parseDischarge(object.discharge),
+                            ...newBaseEntry
+                        };
+                        return newEntry;
+                    }
+                    break;
+                }
+            case "OccupationalHealthcare":
+                { 
+                    if ("employerName" in object && "sickLeave" in object) {
+                        const newEntry: EntryWithoutId = {
+                            type: "OccupationalHealthcare",
+                            employerName: z.string().parse(object.employerName),
+                            sickLeave: parseSickLeave(object.sickLeave),
+                            ...newBaseEntry
+                        };
+                        return newEntry; 
+                    }
+
+                    if ("employerName" in object) {
+                        const newEntry: EntryWithoutId = {
+                            type: "OccupationalHealthcare",
+                            employerName: z.string().parse(object.employerName),
+                            ...newBaseEntry
+                        };
+                        return newEntry; 
+                    }
+                    break;
+                  
+                }
+                default:
+                    break;
+      }
+    
+    };
+    throw new Error('Incorrect data: some fields are incorrect or missing');
+};
+    
+
+
+
+
