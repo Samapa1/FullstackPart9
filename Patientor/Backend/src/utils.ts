@@ -71,13 +71,13 @@ export const toNewEntry = (object: unknown): EntryWithoutId => {
         throw new Error('Incorrect or missing data');
     }
  
-    if ('date' in object && 'specialist' in object && 'type' in object && 'description' in object && 'diagnosisCodes' in object)  {
+    if ('date' in object && 'specialist' in object && 'type' in object && 'description' in object)  {
         
         const newBaseEntry = {
             date: z.string().parse(object.date),
             specialist: z.string().parse(object.specialist),
-            diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
             description: z.string().parse(object.description),
+            diagnosisCodes: parseDiagnosisCodes(object),
         };
 
         switch(object.type) {

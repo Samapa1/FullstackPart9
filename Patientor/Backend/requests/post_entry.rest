@@ -4,8 +4,9 @@ Content-Type: application/json
 {
     "date": "2019-10-20",
     "specialist": "MD Trevor",
-    "description": "ok",
+    "description": "",
     "type": "OccupationalHealthcare",
-        "employerName": "FBI",
-    "diagnosisCodes": "['Z57.1', 'Z74.3', 'M51.2']"
+    "employerName": "FBI",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"]
+    
 }

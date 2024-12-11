@@ -50,6 +50,8 @@ router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatientEnt
 });
 
 router.post('/:id/entries', (req: Request<{id: string}, unknown, EntryWithoutId>, res: Response<Entry>) => {
+  console.log(req.body);
+  console.log(req.params.id);
   const entryData = toNewEntry(req.body);
   const newEntry = patientService.addEntry(req.params.id,  entryData);
   res.json(newEntry);
