@@ -52,7 +52,10 @@ const PatientPage = () => {
           console.error(message);
           setError(message);
         } else {
-          setError("Unrecognized axios error");
+          console.log(e);
+          const message = e.response?.data.error[0].message;
+          console.error(message);
+          setError(message);
         }
       } else {
         console.error("Unknown error", e);

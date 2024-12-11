@@ -74,9 +74,9 @@ export const toNewEntry = (object: unknown): EntryWithoutId => {
     if ('date' in object && 'specialist' in object && 'type' in object && 'description' in object)  {
         
         const newBaseEntry = {
-            date: z.string().parse(object.date),
-            specialist: z.string().parse(object.specialist),
-            description: z.string().parse(object.description),
+            date: z.string().date().parse(object.date),
+            specialist: z.string().min(1).parse(object.specialist),
+            description: z.string().min(1).parse(object.description),
             diagnosisCodes: parseDiagnosisCodes(object),
         };
 

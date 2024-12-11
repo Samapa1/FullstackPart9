@@ -2,7 +2,7 @@ import { useState, SyntheticEvent } from "react";
 
 import {  TextField, Grid, Button } from '@mui/material';
 
-import { EntryFormValues } from "../../types";
+import { EntryFormValues} from "../../types";
 
 interface Props {
   onCancel: () => void;
@@ -14,7 +14,8 @@ const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [specialist, setSpecialist] = useState('');
-  // const [diagnosisCodes, setDiagnosisCodes] = useState<Diagnosis['code']>([]);
+  const [healthCheckRating, sethealthCheckRating] = useState(0);
+  const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
   
 
   const addEntry = (event: SyntheticEvent) => {
@@ -24,7 +25,8 @@ const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
       date,
       specialist,
       type: "HealthCheck",
-    //   diagnosisCodes
+      healthCheckRating,
+      diagnosisCodes
     });
   };
 
@@ -50,12 +52,18 @@ const AddEntryForm = ({ onCancel, onSubmit }: Props) => {
           value={specialist}
           onChange={({ target }) => setSpecialist(target.value)}
         />
-         {/* <TextField
+          <TextField
+          label="HealthCheckRating"
+          fullWidth
+          value={healthCheckRating}
+          onChange={({ target }) => sethealthCheckRating(Number(target.value))}
+        />
+         <TextField
           label="Diagnosis codes"
           fullWidth
           value={diagnosisCodes}
-          onChange={({ target }) => setDiagnosisCodes(target.value)}
-        /> */}
+          onChange={({ target }) => setDiagnosisCodes(target.value.split(','))}
+        />
         <Grid>
           <Grid item>
             <Button
