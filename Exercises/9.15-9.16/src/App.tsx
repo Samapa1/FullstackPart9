@@ -1,6 +1,6 @@
 import Header from "./components/Header";
-import Total from "./components/Total"
-import Content from "./components/Content"
+import Total from "./components/Total";
+import Content from "./components/Content";
 import { CoursePart } from "./types";
 
 const App = () => {
@@ -56,7 +56,7 @@ const App = () => {
       <Content courseParts={courseParts} />
       <Total exercises={totalExercises} />
     </div>
-  )
+  );
 };
 
 export default App;

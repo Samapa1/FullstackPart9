@@ -1,4 +1,4 @@
-import { CoursePart } from "../types"
+import { CoursePart } from "../types";
 
 const Part = ( {part} : { part: CoursePart} ) => {
     {switch(part.kind){
@@ -9,7 +9,7 @@ const Part = ( {part} : { part: CoursePart} ) => {
                     <br />
                     <em>{part.description}</em>
                 </p>
-            )
+            );
         case "background":
             return (
                 <p>
@@ -19,7 +19,7 @@ const Part = ( {part} : { part: CoursePart} ) => {
                     <br />
                     submit to {part.backgroundMaterial}
                 </p>
-            )
+            );
         case "group":
             return (
                 <p>
@@ -27,7 +27,7 @@ const Part = ( {part} : { part: CoursePart} ) => {
                     <br />
                     project exercises {part.groupProjectCount}
                 </p>
-            )
+            );
         case "special":
             return (
                 <p>
@@ -35,8 +35,8 @@ const Part = ( {part} : { part: CoursePart} ) => {
                     <br />
                     required skills: {part.requirements.join(', ')}
                 </p>
-            )
+            );
     }}
-}
+};
 
-export default Part
+export default Part;

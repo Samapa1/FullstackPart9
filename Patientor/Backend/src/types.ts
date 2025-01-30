@@ -53,9 +53,8 @@ interface HospitalEntry extends BaseEntry {
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
 
-// Define special omit for unions
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
-// Define Entry without the 'id' property
+
 export type EntryWithoutId = UnionOmit<Entry, 'id'>;
 
 export interface Patient {
@@ -68,10 +67,8 @@ export interface Patient {
     entries: Entry[];
 }
 
-
 export type NonSensitivePatientData = Omit<Patient, 'ssn' | 'entries'>;
 
-// export type NewPatientEntry = Omit<Patient, 'id'>;
 export type NewPatientEntry = z.infer<typeof newPatientSchema>; 
 
 export enum Gender {
